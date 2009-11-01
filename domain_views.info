@@ -1,0 +1,7 @@
+;  $Id$
+name = Domain Views
+description = Provides Views integration for the Domain Access module.
+package = Domain Access
+dependencies[] = domain
+dependencies[] = views
+core = 6.x

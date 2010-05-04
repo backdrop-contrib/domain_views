@@ -1,4 +1,7 @@
 // $Id$
 
+04-MAY-2010
+-- patch #782208 by bleen18. Excellent Views caching patch.
+
 01-NOV-2009
 -- Initial commit of Domain Views.

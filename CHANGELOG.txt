@@ -2,6 +2,8 @@
 
 24-SEP-2010
 -- Fixed files[] declarations.
+-- Fixes handler domain_views_handler_field_domain_sitename.
+-- Creates the 7.x.1.0 release.
 
 04-MAY-2010
 -- patch #782208 by bleen18. Excellent Views caching patch.

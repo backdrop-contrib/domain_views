@@ -57,7 +57,6 @@ class domain_views_handler_field_domain_sitename extends views_handler_field {
     }
   }
 
-
   function pre_render($values) {
     // If there are no values to render (displaying a summary, or query returned no results)
     // do nothing specific.
@@ -70,20 +69,28 @@ class domain_views_handler_field_domain_sitename extends views_handler_field {
       // Build a list of nids
       $nids = array();
       foreach ($values as $value) {
-        $nids[] = $value->nid;
+        $nids[] = $value->domain_nid;
       }
-      $this->field_values = array();
-      $query = "SELECT node.nid AS nid, domain.sitename AS domain_sitename, domain.domain_id AS domain_domain_id
-      FROM node node  LEFT JOIN domain_access domain_access ON node.nid = domain_access.nid
-      INNER JOIN domain domain ON domain_access.gid = domain.domain_id AND (domain_access.realm = 'domain_id')
-      WHERE node.nid  IN (". implode(',', $nids) .")";
-      $result = db_query($query);
-      while ($item = db_fetch_array($result)) {
-        $this->field_values[$item['nid']][$item['domain_domain_id']] = $item['domain_sitename'];
+      if (!empty($nids)) {
+        $this->field_values = array();
+        $query = "SELECT node.nid AS nid, domain.sitename AS domain_sitename, domain.domain_id AS domain_domain_id
+        FROM node node  LEFT JOIN domain_access domain_access ON node.nid = domain_access.nid
+        INNER JOIN domain domain ON domain_access.gid = domain.domain_id AND (domain_access.realm = 'domain_id')
+        WHERE node.nid  IN (". implode(',', $nids) .")";
+        $result = db_query($query);
+        foreach ($result as $data) {
+          $this->field_values[$data->nid][$data->domain_domain_id] = $data->domain_sitename;
+        }
       }
     }
   }
 
+  /**
+   * Ensure that we have a node id.
+   */
+  function query() {
+    $this->query->add_field('node', 'nid', 'domain_nid');
+  }
 
   /**
    * Render sitename is as a link to the domain.
@@ -93,11 +100,11 @@ class domain_views_handler_field_domain_sitename extends views_handler_field {
   function render_link($data, $values) {
     // Determine the node path, if any.
     $nid = NULL;
-    if (isset($values->{$this->aliases['nid']})) {
-      $nid = $values->{$this->aliases['nid']};
+    if (isset($values->{$this->aliases['domain_nid']})) {
+      $nid = $values->{$this->aliases['domain_nid']};
     }
-    else if (isset($values->nid)) {
-      $nid = $values->nid;
+    else if (isset($values->domain_nid)) {
+      $nid = $values->domain_nid;
     }
     $node_path = '';
     if (!empty($nid)) {
@@ -121,14 +128,10 @@ class domain_views_handler_field_domain_sitename extends views_handler_field {
   function render($values) {
     // Special case handling when returning multiple sitenames per record.
     // This only happens when list all domains is selected in options.
-
     // Determine the node path, if any.
     $nid = NULL;
-    if (isset($values->{$this->aliases['nid']})) {
-      $nid = $values->{$this->aliases['nid']};
-    }
-    else if (isset($values->nid)) {
-      $nid = $values->nid;
+    if (isset($values->domain_nid)) {
+      $nid = $values->domain_nid;
     }
     $node_path = '';
     if (!empty($nid)) {
@@ -136,11 +139,10 @@ class domain_views_handler_field_domain_sitename extends views_handler_field {
     }
     $link_options = array('absolute' => TRUE);
     // Now write the links.
-    if (is_array($this->field_values[$values->nid])) {
-      $field = $this->content_field;
+    if (is_array($this->field_values[$values->domain_nid])) {
       $options = $this->options;
       $items = array();
-      foreach ($this->field_values[$values->nid] as $domain_id => $item) {
+      foreach ($this->field_values[$values->domain_nid] as $domain_id => $item) {
         if (!empty($item)) {
           $link = $item;
           if (!empty($options['link_to_original_domain'])) {

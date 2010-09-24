@@ -1,5 +1,8 @@
 // $Id$
 
+24-SEP-2010
+-- Fixed files[] declarations.
+
 04-MAY-2010
 -- patch #782208 by bleen18. Excellent Views caching patch.
 

@@ -12,11 +12,8 @@
  * Argument default with the current domain's id
  */
 class domain_views_plugin_argument_default_current extends views_plugin_argument_default {
-  function argument_form(&$form, &$form_state) {
-  }
-
   function get_argument() {
-    global $_domain;
+    $_domain = domain_get_domain();
     return $_domain['domain_id'];
   }
 }

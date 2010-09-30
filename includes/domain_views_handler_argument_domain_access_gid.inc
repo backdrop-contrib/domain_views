@@ -15,24 +15,34 @@ class domain_views_handler_argument_domain_access_gid extends views_handler_argu
  // If you pass "current" as the argument, it filters according to the domain the page is being viewed from
   function set_argument($arg) {
     if ($arg == 'current') {
-      $arg = $GLOBALS['_domain']['domain_id'];
+      $domain = domain_get_domain();
+      $arg = $domain['domain_id'];
     }
     return parent::set_argument($arg);
   }
 
   function title() {
-    return $this->domain_id($this->argument);
+    return $this->get_domain_id($this->argument);
   }
 
   function summary_name($data) {
-    return $this->domain_id($data->{$this->name_alias});
+    return $this->get_domain_id($data->{$this->name_alias});
   }
 
   function summary_argument($data) {
-    return $this->domain_id($data->{$this->name_alias});
+    return $this->get_domain_id($data->{$this->name_alias});
   }
 
-  function domain_id($domain_id) {
+  /**
+   * Filter the query properly.
+   */
+  function query() {
+    parent::query();
+    $table = $this->ensure_my_table();
+    $this->query->add_where(0, "$table.realm", 'domain_id');
+  }
+
+  function get_domain_id($domain_id) {
     $domains = domain_domains();
     foreach ($domains as $domain) {
       $domain_options[$domain['domain_id']] = $domain['sitename'];

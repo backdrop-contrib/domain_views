@@ -12,7 +12,7 @@
  *
  * @ingroup domain_views
  */
-class domain_views_handler_field_domain_sitename extends views_handler_field {
+class domain_views_handler_field_domain_subdomain extends views_handler_field {
   /**
    * Constructor to provide additional field to add.
    */
@@ -50,7 +50,7 @@ class domain_views_handler_field_domain_sitename extends views_handler_field {
       return;
     }
     $path = $domain['path'];
-    $text = $domain['sitename'];
+    $text = $domain['subdomain'];
     return l($text, $path);
   }
 }

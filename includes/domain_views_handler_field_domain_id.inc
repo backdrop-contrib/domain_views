@@ -51,7 +51,7 @@ class domain_views_handler_field_domain_id extends views_handler_field {
 
   function query() {
     parent::query();
-    // The {domain_alias} table uses GID instead of DOMAIN_ID.
+    // The {domain_access} table uses GID instead of DOMAIN_ID.
     if (isset($this->query->fields['domain_access_gid'])) {
       $this->query->fields['domain_access_domain_id']['field'] = 'gid';
     }

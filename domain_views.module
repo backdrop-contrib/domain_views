@@ -2,7 +2,7 @@
 // $Id$
 
 /**
- * @defgroup domain_views Domain Views: provides a views filter
+ * @defgroup domain_views Domain Views: provides views integration.
  *
  * Views integration for Domain Access.
  */
@@ -14,10 +14,6 @@
  * Original code by mrichar1 see http://drupal.org/node/200714
  *
  * @ingroup domain_views
- */
-
-/**
- * This module file is a stub, all the work is done by domain_views.views.inc.
  */
 
 /**
@@ -33,7 +29,7 @@ function domain_views_views_api() {
 function domain_views_theme() {
   return array(
    'domain_views_view_multiple_field' => array(
-      'arguments' => array('items' => NULL, 'field' => NULL, 'data' => NULL),
+      'variables' => array('items' => NULL, 'field' => NULL, 'values' => NULL),
     ),
   );
 }
@@ -65,13 +61,13 @@ function theme_domain_views_view_multiple_field($items, $field, $values) {
  * Access callback for use with domain_views_plugin_access.
  *
  * @param $domains
- *  An array of domain ids that may access this view.
+ *   An array of domain ids that may access this view.
  * @param $strict
- *  Boolean value indicating if strict rules should be applied.
+ *   Boolean value indicating if strict rules should be applied.
  * @param $member
- *  Boolean value indicating if membership rules should be applied.
+ *   Boolean value indicating if membership rules should be applied.
  * @return
- *  Boolean TRUE or FALSE.
+ *   Boolean TRUE or FALSE.
  */
 function domain_views_access($domains, $strict = TRUE, $member = FALSE) {
   global $_domain, $user;
@@ -115,9 +111,9 @@ function domain_views_access($domains, $strict = TRUE, $member = FALSE) {
  * Helper function to return the node grants for this user.
  *
  * @param $account
- *  The account object of the user requesting the View.
+ *   The account object of the user requesting the View.
  * @return $grants
- *  An array indicating which domains the user may access.
+ *   An array indicating which domains the user may access.
  */
 function domain_views_get_grants($account = NULL)  {
   global $user, $_domain;

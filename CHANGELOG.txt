@@ -1,5 +1,19 @@
 // $Id$
 
+30-SEP-2010
+-- Adds missing domain_views_plugin_cache_time.inc to info file.
+-- Code style cleanup.
+-- Patch #926906 by dereine. Fixes hook_theme.
+-- Patch #926908 by dereine. Removes deprecated hook_views_handlers().
+-- Removed JOIN from {node} to {domain}. Use {domain_access} instead.
+-- Adds/fixes domain sitename node field.
+-- Adds domain_sitename field handler.
+-- Adds domain_subdomain field handler.
+-- Fixes domain id filter for nodes.
+-- Fixes argument handler.
+-- Patch #926922 by dereine. Fixes handlers for new API changes.
+-- Creates the 7.x.1.1 release.
+
 24-SEP-2010
 -- Fixed files[] declarations.
 -- Fixes handler domain_views_handler_field_domain_sitename.

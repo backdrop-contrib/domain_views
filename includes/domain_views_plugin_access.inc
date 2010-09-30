@@ -23,11 +23,16 @@ class domain_views_plugin_access extends views_plugin_access {
     return t('Domains');
   }
 
-  function option_defaults(&$options) {
-    $options['domains'] = array(-1);
-    $options['domain_strict'] = FALSE;
-    $options['domain_member'] = FALSE;
-  }
+  function option_definition() {
+    $options = parent::option_definition();
+
+    $options['domains'] = array('default' => -1);
+    $options['domain_strict'] = array('default' => FALSE);
+    $options['domain_member'] = array('default' => FALSE);
+
+    return $options;
+   }
+
 
   function options_form(&$form, &$form_state) {
     $domains = domain_domains();

@@ -14,6 +14,8 @@
 -- Patch #926922 by dereine. Fixes handlers for new API changes.
 -- Creates the 7.x.1.1 release.
 -- Cleans up some stray typos.
+-- Adds handler for domain realm filter.
+-- Creates the 7.x.1.2 release.
 
 24-SEP-2010
 -- Fixed files[] declarations.

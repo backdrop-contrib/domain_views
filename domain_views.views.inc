@@ -182,7 +182,7 @@ function domain_views_views_data() {
     ),
     // Information for accepting a domain_id as a filter
     'filter' => array(
-      'handler' => 'views_handler_filter_string',
+      'handler' => 'domain_views_handler_filter_domain_access_realm',
     ),
     // Information for sorting on a domain_id.
     'sort' => array(

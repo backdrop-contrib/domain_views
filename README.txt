@@ -14,9 +14,12 @@ CONTENTS
 1.  Introduction
 1.1   Authors
 2.  Installation
-3.  Arguments
-4.  Filters
-5.  Access Plugin
+3.  Working with Domains
+4.  Working with Nodes
+5.  Arguments
+6.  Filters
+7.  Access Plugin
+8.  Upgrading from Drupal 6
 
 ----
 1. Introduction
@@ -56,7 +59,23 @@ To install, you simply enable the module at Admin > Build > Modules.
 No database tables are installed and no configuration is required.
 
 ----
-3. Arguments
+3.  Working with Domains
+
+For Views, we provide the Domain as a 'base table'. You can use Views to create
+lists of domains, sort those lists, and so forth. These lists are separate from
+interaction with node information.
+
+The domain-specific fields and filters are labelled 'Domains' in the UI.
+
+----
+4.  Working with Nodes
+
+For node-based Views, use the fields and filters labelled 'Domain Access' or
+'Domain Editors'. These values join to the node table and can be used to filter
+or display domain information for node views.
+
+----
+5. Arguments
 
 This module provides a Domain Access argument that can be added to any View.
 Arguments can be thought of as "dynamic filters" that are applied to the view at
@@ -97,7 +116,7 @@ views at:
     http://drupal.org/node/54455.
 
 ----
-4.  Filters
+6.  Filters
 
 Using the Domain Access filter lets you restrict a View to only content assigned
 to the selected domains.
@@ -114,7 +133,7 @@ The filters available to Domain Access include all active domains plus currently
 active domain.
 
 ----
-5. Access Plugin
+7. Access Plugin
 
 Domain Views offers an access plugin to all Views that allow you to select
 on which domains a View may be accessed. There are three settings to consider.
@@ -125,7 +144,18 @@ on which domains a View may be accessed. There are three settings to consider.
       data from hook_node_grants() before appying access rules.
   -- Whether the user is assigned to the active domain. This setting can be
       used to provide members-only or editors-only Views. This setting is more
-      liberal than the strict setting, and they two may be used at the same time.
+      liberal than the strict setting, and they two may be used at the same
+      time.
 
-This access setting is valuable for cases where certain Views are not appropriate
-on all domains.
+This access setting is valuable for cases where certain Views are not
+appropriate on all domains.
+
+----
+8.  Upgrading from Drupal 6
+
+Note that some handlers have changed. When you upgrade from Drupal 6, you may
+need to update your Views.
+
+Most notably, views elements marked 'Domain' in the user interface are no longer
+accessible to node-based Views. You must use the 'Domain Access' fields and
+filters instead.

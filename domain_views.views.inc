@@ -23,15 +23,17 @@ function domain_views_views_data() {
     'title' => t('Domains'),
     'help' => t('Domain Access uses domains to divide and display content on a group of related sites.'),
   );
-  //Define the joins.
-  /*
-   DO NOT JOIN TO NODE. Make people use Domain Access.
+  // Define the joins.
   $data['domain']['table']['join']['node'] = array(
     'left_table' => 'domain_access',
     'left_field' => 'gid',
     'field' => 'domain_id',
   );
-  */
+  $data['domain']['table']['join']['node_revision'] = array(
+    'left_table' => 'domain_access',
+    'left_field' => 'gid',
+    'field' => 'domain_id',
+  );
   // Define the fields.
   $data['domain']['domain_id'] = array(
     'title' => t('Domain ID'),
@@ -121,6 +123,12 @@ function domain_views_views_data() {
     'left_field' => 'nid',
     'field' => 'nid',
   );
+  // Define the joins between {node_revision} and {domain_access}.
+  $data['domain_access']['table']['join']['node_revision'] = array(
+    'left_field' => 'nid',
+    'field' => 'nid',
+  );
+  // Join the two domain tables.
   $data['domain_access']['table']['join']['domain'] = array(
     'left_field' => 'domain_id',
     'field' => 'gid',
@@ -203,7 +211,7 @@ function domain_views_views_data() {
       'label' => t('Available on current domain'),
     ),
   );
-  // TODO: make this sortable.
+  /*TODO: make this sortable.
   $data['domain_access']['sitename'] = array(
     'title' => t('Site name'),
     'help' => t('The display string that identifies a domain.'),
@@ -211,7 +219,7 @@ function domain_views_views_data() {
       'handler' => 'domain_views_handler_field_domain_access_sitename',
       'click sortable' => FALSE,
     ),
-  );
+  );*/
   // Define the {domain_editor} table.
   $data['domain_editor']['table']['group'] = t('Domain Editor');
   // Define the joins.
@@ -220,6 +228,10 @@ function domain_views_views_data() {
     'field' => 'uid',
   );
   $data['domain_editor']['table']['join']['node'] = array(
+    'left_field' => 'uid',
+    'field' => 'uid',
+  );
+  $data['domain_editor']['table']['join']['node_revision'] = array(
     'left_field' => 'uid',
     'field' => 'uid',
   );

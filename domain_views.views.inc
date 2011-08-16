@@ -118,9 +118,13 @@ function domain_views_views_data() {
   // Define the {domain_access} table.
   $data['domain_access']['table']['group'] = t('Domain Access');
   // Define the joins.
+  // Note that we only JOIN on domain_id records.
   $data['domain_access']['table']['join']['node'] = array(
     'left_field' => 'nid',
     'field' => 'nid',
+    'extra' => array(
+      array('field' => 'realm', 'value' => 'domain_id', 'numeric' => FALSE),
+    ),
   );
   // Define the joins between {node_revision} and {domain_access}.
   $data['domain_access']['table']['join']['node_revision'] = array(
@@ -128,6 +132,7 @@ function domain_views_views_data() {
     'field' => 'nid',
   );
   // Join the two domain tables.
+  // Note that we only JOIN on domain_id records.
   $data['domain_access']['table']['join']['domain'] = array(
     'left_field' => 'domain_id',
     'field' => 'gid',

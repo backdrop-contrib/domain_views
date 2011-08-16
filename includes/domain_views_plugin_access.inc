@@ -35,7 +35,7 @@ class domain_views_plugin_access extends views_plugin_access {
     $options['domain_member'] = array('default' => FALSE);
 
     return $options;
-   }
+  }
 
   function options_form(&$form, &$form_state) {
     $domains = domain_domains();

@@ -24,7 +24,7 @@ class domain_views_handler_filter_domain_access_gid extends views_handler_filter
       $this->value_options = $domain_options;
     }
   }
-  
+
   /**
    * Filter the query properly.
    */

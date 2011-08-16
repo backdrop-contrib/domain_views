@@ -210,7 +210,7 @@ function domain_views_views_data() {
       'label' => t('Available on current domain'),
     ),
   );
-  /*TODO: make this sortable.
+  /* TODO: make this sortable.
   $data['domain_access']['sitename'] = array(
     'title' => t('Site name'),
     'help' => t('The display string that identifies a domain.'),
@@ -218,7 +218,7 @@ function domain_views_views_data() {
       'handler' => 'domain_views_handler_field_domain_access_sitename',
       'click sortable' => FALSE,
     ),
-  );*/
+  ); */
   // Define the {domain_editor} table.
   $data['domain_editor']['table']['group'] = t('Domain Editor');
   // Define the joins.
@@ -291,7 +291,7 @@ function domain_views_views_data() {
  * Implements hook_views_plugins().
  */
 function domain_views_views_plugins() {
-  $path = drupal_get_path('module', 'domain_views') .'/includes';
+  $path = drupal_get_path('module', 'domain_views') . '/includes';
   return array(
     'access' => array(
       'domain' => array(
@@ -311,7 +311,7 @@ function domain_views_views_plugins() {
       ),
     ),
     'cache' => array(
-      'time_per_domain' =>array(
+      'time_per_domain' => array(
         'title' => t('Time-based Per Domain'),
         'help' => t('Time-based caching of views on a per domain basis. This is necessary if you want to cache a view that filters on "current domain".'),
         'handler' => 'domain_views_plugin_cache_time',

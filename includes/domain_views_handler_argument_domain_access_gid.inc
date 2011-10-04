@@ -38,7 +38,9 @@ class domain_views_handler_argument_domain_access_gid extends views_handler_argu
   function query() {
     parent::query();
     $table = $this->ensure_my_table();
-    $this->query->add_where(0, "$table.realm", 'domain_id');
+    if ($table == 'domain_access') {
+      $this->query->add_where(0, "$table.realm", 'domain_id');
+    }
   }
 
   function get_domain_id($domain_id) {

@@ -182,6 +182,9 @@ function domain_views_views_data() {
   $data['domain_access']['table']['join']['node_revision'] = array(
     'left_field' => 'nid',
     'field' => 'nid',
+    'extra' => array(
+      array('field' => 'realm', 'value' => 'domain_id', 'numeric' => FALSE),
+    ),
   );
   // Join the two domain tables.
   // Note that we only JOIN on domain_id records.

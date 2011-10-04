@@ -114,6 +114,58 @@ function domain_views_views_data() {
       'handler' => 'views_handler_sort',
     ),
   );
+  // New fields in 7.x.3.
+  if (domain_views_api_version() > 2) {
+    $data['domain']['weight'] = array(
+      'title' => t('Weight'),
+      'help' => t('The sort order for domain lists.'),
+      'field' => array(
+        'handler' => 'views_handler_field_numeric',
+        'click sortable' => TRUE,
+      ),
+      // Information for accepting a domain_id as a filter
+      'filter' => array(
+        'handler' => 'views_handler_filter_numeric',
+        'label' => t('Weight'),
+      ),
+      // Information for sorting on a domain_id.
+      'sort' => array(
+        'handler' => 'views_handler_sort',
+      ),
+    );
+    $data['domain']['is_default'] = array(
+      'title' => t('Default domain'),
+      'help' => t('A boolean flag indicating the default domain.'),
+      'field' => array(
+        'handler' => 'views_handler_field_boolean',
+        'click sortable' => TRUE,
+      ),
+      // Information for accepting a domain_id as a filter
+      'filter' => array(
+        'handler' => 'views_handler_filter_boolean_operator',
+        'label' => t('Default domain'),
+      ),
+      // Information for sorting on a domain_id.
+      'sort' => array(
+        'handler' => 'views_handler_sort',
+      ),
+    );
+    $data['domain']['machine_name'] = array(
+      'title' => t('Machine name'),
+      'help' => t('The machine-readable name of this domain.'),
+      'field' => array(
+        'click sortable' => TRUE,
+      ),
+      // Information for accepting a domain_id as a filter
+      'filter' => array(
+        'handler' => 'views_handler_filter_string',
+      ),
+      // Information for sorting on a domain_id.
+      'sort' => array(
+        'handler' => 'views_handler_sort',
+      ),
+    );
+  }
 
   // Define the {domain_access} table.
   $data['domain_access']['table']['group'] = t('Domain Access');

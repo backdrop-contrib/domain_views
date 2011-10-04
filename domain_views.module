@@ -23,6 +23,17 @@ function domain_views_views_api() {
 }
 
 /**
+ * Provides a switch fo 7.x.2 / 7.x.3 compatibility.
+ */
+function domain_views_api_version() {
+  if (function_exists('domain_api_version')) {
+    return domain_api_version();
+  }
+  return 2;
+}
+
+
+/**
  * Implement hook_theme().
  */
 function domain_views_theme() {

@@ -158,7 +158,7 @@ function domain_views_views_data() {
       ),
       // Information for accepting a domain_id as a filter
       'filter' => array(
-        'handler' => 'views_handler_filter_string',
+        'handler' => 'domain_views_handler_filter_domain_machine_name',
       ),
       // Information for sorting on a domain_id.
       'sort' => array(
@@ -389,6 +389,8 @@ function domain_views_views_query_substitutions($view) {
   return array(
     '***CURRENT_DOMAIN***' => $domain['domain_id'],
     '***PRIMARY_DOMAIN***' => $default['domain_id'],
+    '***CURRENT_DOMAIN_MACHINE_NAME***' => $domain['machine_name'],
+    '***PRIMARY_DOMAIN_MACHINE_NAME***' => $default['machine_name'],
   );
 }
 

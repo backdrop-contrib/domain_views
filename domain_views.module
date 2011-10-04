@@ -32,6 +32,23 @@ function domain_views_api_version() {
   return 2;
 }
 
+/**
+ * Implement hook_ctools_plugin_api().
+ */
+function domain_views_ctools_plugin_api($module, $api) {
+  if ($module == 'views_ui') {
+    return array('version' => 2);
+  }
+}
+
+/**
+ * Implement hook_ctools_plugin_directory().
+ */
+function domain_views_ctools_plugin_directory($module, $plugin) {
+  if ($module == 'views_ui' && !empty($plugin)) {
+    return "plugins/$plugin";
+  }
+}
 
 /**
  * Implement hook_theme().

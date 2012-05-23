@@ -261,6 +261,7 @@ function domain_views_views_data() {
     'title' => t('Available on current domain'),
     'help' => t('Filters out nodes not available on current domain (published to current domain or all affiliates)'),
     'field' => array(
+      'field' => 'gid',
       'handler' => 'views_handler_field_boolean',
       'click sortable' => TRUE,
     ),

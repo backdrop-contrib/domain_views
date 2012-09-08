@@ -36,7 +36,7 @@ class domain_views_handler_argument_domain_access_gid extends views_handler_argu
    * Filter the query properly.
    */
   function query($group_by = FALSE) {
-    parent::query();
+    parent::query($group_by);
     $table = $this->ensure_my_table();
     if ($table == 'domain_access') {
       $this->query->add_where(0, "$table.realm", 'domain_id');

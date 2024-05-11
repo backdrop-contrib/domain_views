@@ -26,9 +26,47 @@ class domain_views_plugin_cache_time extends views_plugin_cache_time {
      * Create an md5 hashed key including the current domain
      * to use as the cache key for caching the views results.
      */
+    global $user;
+    global $_domain;
+
     if (!isset($this->_results_key)) {
+      // The query data passed to $build_info is not a string, as Views
+      // expects. Since we are a node access module, the query data is still
+      // a raw query object, which we must inspect. Views includes a timestamp
+      // on the query which breaks cache key handling.
+      // See http://drupal.org/node/1705168
+      $args = array();
+      $build_info = $this->view->build_info;
+      foreach ($build_info as $key => $value) {
+        if ($value instanceof SelectQueryInterface && isset($value->alterMetaData['views_substitutions'])) {
+          foreach ($value->alterTags as $key => $data) {
+            $args['alterTags'][$key] = $data;
+          }
+          foreach ($value->alterMetaData['views_substitutions'] as $key => $data) {
+            if ($key != '***CURRENT_TIME***') {
+              $args['alterMetaData']['views_substitutions'][$key] = $data;
+            }
+          }
+        }
+        // Include the non-query information.
+        else {
+          $args[$key] = $value;
+        }
+      }
+      $key_data = array(
+        'build_info' => $args,
+        'roles' => array_keys($user->roles),
+        'super-user' => $user->uid == 1, // Special caching for super user.
+        'language' => $GLOBALS['language'],
+        'domain' => $_domain['domain_id'], // Adding current domain to key data.
+      );
+      foreach (array('exposed_info', 'page', 'sort', 'order') as $key) {
+        if (isset($_GET[$key])) {
+          $key_data[$key] = $_GET[$key];
+        }
+      }
       // Set the results key.
-      $this->_results_key = $this->view->name . ':' . $this->display->id . ':results:' . $this->get_cache_key();
+      $this->_results_key = $this->view->name . ':' . $this->display->id . ':results:' . md5(serialize($key_data));
     }
 
     return $this->_results_key;
@@ -39,54 +77,22 @@ class domain_views_plugin_cache_time extends views_plugin_cache_time {
      * Create an md5 hashed key including the current domain
      * to use as the cache key for caching the views output.
      */
-    if (!isset($this->_output_key)) {
-      $key_data = array(
-        'theme' => $GLOBALS['theme'],
-      );
-      // Match the results key.
-      $this->_output_key = $this->view->name . ':' . $this->display->id . ':output:' . $this->get_cache_key($key_data);
-    }
-
-    return $this->_output_key;
-  }
-
-  /**
-   * Returns cache key.
-   * @see  views_plugin_cache::get_cache_key()
-   *
-   * @param array $key_data
-   *   Additional data for cache segmentation and/or overrides for default
-   *   segmentation.
-   *
-   * @return string
-   */
-  function get_cache_key($key_data = array()) {
     global $user;
     global $_domain;
 
-    $key_data += array(
-      'roles' => array_keys($user->roles),
-      'super-user' => $user->uid == 1, // special caching for super user.
-      'language' => $GLOBALS['language'],
-      'domain' => $_domain['domain_id'], // Adding current domain to key data.
-    );
-
-    if (empty($key_data['build_info'])) {
-      $build_info = $this->view->build_info;
-      foreach (array('query','count_query') as $index) {
-        // If the default query back-end is used generate SQL query strings from
-        // the query objects.
-        if ($build_info[$index] instanceof SelectQueryInterface) {
-          $query = clone $build_info[$index];
-          $query->preExecute();
-          $key_data['build_info'][$index] = array(
-            'sql' => (string) $query,
-            'arguments' => $query->getArguments(),
-          );
-        }
-      }
+    if (!isset($this->_output_key)) {
+      $key_data = array(
+        'result' => $this->view->result,
+        'roles' => array_keys($user->roles),
+        'super-user' => $user->uid == 1, // Special caching for super user.
+        'theme' => $GLOBALS['theme'],
+        'language' => $GLOBALS['language'],
+        'domain' => $_domain['domain_id'], // Adding current domain to key data.
+      );
+      // Match the results key.
+      $this->_output_key = $this->view->name . ':' . $this->display->id . ':output:' . md5(serialize($key_data));
     }
-    $key = md5(serialize($key_data));
-    return $key;
+
+    return $this->_output_key;
   }
 }

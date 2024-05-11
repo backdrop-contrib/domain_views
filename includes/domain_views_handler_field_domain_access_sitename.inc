@@ -107,7 +107,7 @@ class domain_views_handler_field_domain_access_sitename extends views_handler_fi
     $data = $domain['sitename'];
     $node_path = '';
     if (!empty($nid)) {
-      $node_path = drupal_get_path_alias('node/' . $nid);
+      $node_path = backdrop_get_path_alias('node/' . $nid);
     }
     // Determine the link path.
     if (!empty($this->options['link_to_default_domain']) && $data !== NULL && $data !== '') {
@@ -134,7 +134,7 @@ class domain_views_handler_field_domain_access_sitename extends views_handler_fi
     }
     $node_path = '';
     if (!empty($nid)) {
-      $node_path = drupal_get_path_alias('node/' . $nid);
+      $node_path = backdrop_get_path_alias('node/' . $nid);
     }
     $link_options = array('absolute' => TRUE);
     // Now write the links.

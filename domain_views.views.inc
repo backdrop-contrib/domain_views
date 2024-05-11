@@ -4,7 +4,7 @@
  * @file
  * Provides the views data and handlers for domain.module.
  *
- * Original code by mrichar1.  Port to Drupal 6 by nonsie.
+ * Original code by mrichar1.  Port to Backdrop 6 by nonsie.
  *
  * @ingroup domain_views
  */
@@ -175,7 +175,11 @@ function domain_views_views_data() {
     'left_field' => 'nid',
     'field' => 'nid',
     'extra' => array(
-      array('field' => 'realm', 'value' => 'domain_id', 'numeric' => FALSE),
+      array(
+        'field' => 'realm',
+        'value' => 'domain_id',
+        'numeric' => FALSE,
+      ),
     ),
   );
   // Define the joins between {node_revision} and {domain_access}.
@@ -183,7 +187,11 @@ function domain_views_views_data() {
     'left_field' => 'nid',
     'field' => 'nid',
     'extra' => array(
-      array('field' => 'realm', 'value' => 'domain_id', 'numeric' => FALSE),
+      array(
+        'field' => 'realm',
+        'value' => 'domain_id',
+        'numeric' => FALSE,
+      ),
     ),
   );
   // Join the two domain tables.
@@ -192,7 +200,11 @@ function domain_views_views_data() {
     'left_field' => 'domain_id',
     'field' => 'gid',
     'extra' => array(
-      array('field' => 'realm', 'value' => 'domain_id', 'numeric' => FALSE),
+      array(
+        'field' => 'realm',
+        'value' => 'domain_id',
+        'numeric' => FALSE,
+      ),
     ),
   );
   // Define the fields.
@@ -259,28 +271,27 @@ function domain_views_views_data() {
   // Define available on current domain field
   $data['domain_access']['current_all'] = array(
     'title' => t('Available on current domain'),
+    'help' => t('Filters out nodes not available on current domain (published to current domain or all affiliates)'),
     'field' => array(
-      'help' => t('A boolean flag indicating whether this content available for current domain (published to current domain or all affiliates)'),
       'field' => 'gid',
       'handler' => 'views_handler_field_boolean',
       'click sortable' => TRUE,
     ),
     'filter' => array(
-      'help' => t('Filters out nodes not available on current domain (published to current domain or all affiliates)'),
       'field' => 'gid',
       'handler' => 'domain_views_handler_filter_domain_access_current_all',
       'label' => t('Available on current domain'),
     ),
   );
   /* TODO: make this sortable.
-  $data['domain_access']['sitename'] = array(
-    'title' => t('Site name'),
-    'help' => t('The display string that identifies a domain.'),
-    'field' => array(
-      'handler' => 'domain_views_handler_field_domain_access_sitename',
-      'click sortable' => FALSE,
-    ),
-  ); */
+   $data['domain_access']['sitename'] = array(
+   'title' => t('Site name'),
+   'help' => t('The display string that identifies a domain.'),
+   'field' => array(
+   'handler' => 'domain_views_handler_field_domain_access_sitename',
+   'click sortable' => FALSE,
+   ),
+   ); */
   // Define the {domain_editor} table.
   $data['domain_editor']['table']['group'] = t('Domain Editor');
   // Define the joins.
@@ -353,7 +364,7 @@ function domain_views_views_data() {
  * Implements hook_views_plugins().
  */
 function domain_views_views_plugins() {
-  $path = drupal_get_path('module', 'domain_views') . '/includes';
+  $path = backdrop_get_path('module', 'domain_views') . '/includes';
   return array(
     'access' => array(
       'domain' => array(
@@ -381,27 +392,21 @@ function domain_views_views_plugins() {
         'path' => $path,
         'parent' => 'time',
       ),
-    )
+    ),
   );
 }
 
 /**
- * Implements hook_views_query_substitutions ()
+ * Implements hook_views_query_substitutions ().
  */
 function domain_views_views_query_substitutions($view) {
   $domain = domain_get_domain();
   $default = domain_default();
-
-  $return = array(
+  return array(
     '***CURRENT_DOMAIN***' => $domain['domain_id'],
     '***PRIMARY_DOMAIN***' => $default['domain_id'],
+    '***CURRENT_DOMAIN_MACHINE_NAME***' => $domain['machine_name'],
+    '***PRIMARY_DOMAIN_MACHINE_NAME***' => $default['machine_name'],
   );
-  // Ensure compatibility with 7.x.2 and 7.x.3.
-  if (isset($domain['machine_name'])) {
-    $return['***CURRENT_DOMAIN_MACHINE_NAME***'] = $domain['machine_name'];
-    $return['***PRIMARY_DOMAIN_MACHINE_NAME***'] = $default['machine_name'];
-  }
-
-  return $return;
 }
 

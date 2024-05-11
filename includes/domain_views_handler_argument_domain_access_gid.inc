@@ -10,8 +10,8 @@
 /**
  * Argument for domain ids stored in the database currently active domain and any domain.
  */
-class domain_views_handler_argument_domain_access_gid extends views_handler_argument  {
- // If you pass "current" as the argument, it filters according to the domain the page is being viewed from
+class domain_views_handler_argument_domain_access_gid extends views_handler_argument {
+  // If you pass "current" as the argument, it filters according to the domain the page is being viewed from
   function set_argument($arg) {
     if ($arg == 'current') {
       $domain = domain_get_domain();

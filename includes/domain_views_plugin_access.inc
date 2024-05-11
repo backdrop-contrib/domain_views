@@ -6,7 +6,7 @@
  *  Domain Views plugin that restricts View display based on the current domain.
  *  This plugin respects hook_domaingrants().
 
-/**
+ /**
  * Access plugin that provides permission-based access control.
  */
 class domain_views_plugin_access extends views_plugin_access {
@@ -49,7 +49,7 @@ class domain_views_plugin_access extends views_plugin_access {
       // The domain must be valid.
       if ($domain['valid'] || user_access('access inactive domains')) {
         // Filter checkboxes but not select lists.
-        $options[$domain['domain_id']] = empty($format) ? check_plain($domain['sitename']) : $domain['sitename'];
+        $options[$domain['domain_id']] = empty($format)?check_plain($domain['sitename']) : $domain['sitename'];
       }
     }
     $form['domains'] = array(

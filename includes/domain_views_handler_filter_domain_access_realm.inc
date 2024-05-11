@@ -14,7 +14,7 @@ class domain_views_handler_filter_domain_access_realm extends views_handler_filt
     if (!isset($this->value_options)) {
       $this->value_options = array(
         'domain_site' => t('All affilates (domain_site)'),
-        'domain_id' => t('Per domain (domain_id)')
+        'domain_id' => t('Per domain (domain_id)'),
       );
     }
   }

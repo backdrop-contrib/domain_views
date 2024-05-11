@@ -42,29 +42,35 @@ class domain_views_handler_field_domain_id extends views_handler_field {
       $this->options['link_option'] = 'link_to_domain';
 
       // Unset old options
-      $form['link_to_domain_id'] = array('#type' => 'value', '#value' => FALSE);
-      $form['link_to_sitename'] = array('#type' => 'value', '#value' => FALSE);
+      $form['link_to_domain_id'] = array(
+        '#type' => 'value',
+        '#value' => FALSE,
+      );
+      $form['link_to_sitename'] = array(
+        '#type' => 'value',
+        '#value' => FALSE,
+      );
     }
 
     $form['display_method'] = array(
-        '#title' => t('Display as'),
-        '#type' => 'select',
-        '#options' => array(
-            'domain_id' => t('Domain ID'),
-            'sitename' => t('Site Name'),
-            'subdomain' => t('Subdomain'),
-        ),
-        '#default_value' => ($this->options['display_method']) ? $this->options['display_method'] : 'domain_id',
+      '#title' => t('Display as'),
+      '#type' => 'select',
+      '#options' => array(
+        'domain_id' => t('Domain ID'),
+        'sitename' => t('Site Name'),
+        'subdomain' => t('Subdomain'),
+      ),
+      '#default_value' => ($this->options['display_method']) ? $this->options['display_method'] : 'domain_id',
     );
 
     $form['link_option'] = array(
-        '#title' => t('Link options'),
-        '#type' => 'select',
-        '#options' => array(
-            'none' => t('No link'),
-            'link_to_domain' => t('Link this field to its domain'),
-        ),
-        '#default_value' => ($this->options['link_option']) ? $this->options['link_option'] : 'none',
+      '#title' => t('Link options'),
+      '#type' => 'select',
+      '#options' => array(
+        'none' => t('No link'),
+        'link_to_domain' => t('Link this field to its domain'),
+      ),
+      '#default_value' => ($this->options['link_option']) ? $this->options['link_option'] : 'none',
     );
   }
 

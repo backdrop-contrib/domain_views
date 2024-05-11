@@ -10,7 +10,7 @@
 /**
  * Filter for domain ids stored in the database, currently active domain and any domain
  */
-class domain_views_handler_filter_domain_domain_id extends views_handler_filter_in_operator  {
+class domain_views_handler_filter_domain_domain_id extends views_handler_filter_in_operator {
   function get_value_options() {
     if (!isset($this->value_options)) {
       $this->value_title = t('Domain');

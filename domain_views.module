@@ -16,7 +16,7 @@
  */
 
 /**
- * Implement hook_views_api().
+ * Implements hook_views_api().
  */
 function domain_views_views_api() {
   return array('api' => 2.0);
@@ -33,7 +33,7 @@ function domain_views_api_version() {
 }
 
 /**
- * Implement hook_ctools_plugin_api().
+ * Implements hook_ctools_plugin_api().
  */
 function domain_views_ctools_plugin_api($module, $api) {
   if ($module == 'views_ui') {
@@ -42,21 +42,21 @@ function domain_views_ctools_plugin_api($module, $api) {
 }
 
 /**
- * Implement hook_ctools_plugin_directory().
+ * Implements hook_ctools_plugin_directory().
  */
 function domain_views_ctools_plugin_directory($module, $plugin) {
   // Only supported by Domain Access 7.x.3
-    if (domain_views_api_version() > 2 && $module == 'views_ui' && !empty($plugin)) {
+  if (domain_views_api_version() > 2 && $module == 'views_ui' && !empty($plugin)) {
     return "plugins/$plugin";
   }
 }
 
 /**
- * Implement hook_theme().
+ * Implements hook_theme().
  */
 function domain_views_theme() {
   return array(
-   'domain_views_view_multiple_field' => array(
+    'domain_views_view_multiple_field' => array(
       'variables' => array('items' => NULL, 'field' => NULL, 'values' => NULL),
     ),
   );
@@ -143,7 +143,7 @@ function domain_views_access($domains, $strict = TRUE, $member = FALSE) {
  * @return $grants
  *   An array indicating which domains the user may access.
  */
-function domain_views_get_grants($account = NULL)  {
+function domain_views_get_grants($account = NULL) {
   global $user, $_domain;
   static $grants;
   if (empty($account)) {
@@ -164,7 +164,7 @@ function domain_views_get_grants($account = NULL)  {
 
 /**
  * Helper function to hook_domaingrants().
- * This should be replaced by a drupal_alter().
+ * This should be replaced by a backdrop_alter().
  */
 function _domain_views_alter_grants(&$grants, $account, $op) {
   static $_modules;
@@ -178,4 +178,25 @@ function _domain_views_alter_grants(&$grants, $account, $op) {
       $function($grants, $account, $op);
     }
   }
+}
+
+/**
+ * Implements hook_autoload_info().
+ */
+function domain_views_autoload_info() {
+  return array(
+    'domain_views_handler_argument_domain_access_gid' => 'includes/domain_views_handler_argument_domain_access_gid.inc',
+    'domain_views_handler_field_domain_access_sitename' => 'includes/domain_views_handler_field_domain_access_sitename.inc',
+    'domain_views_handler_field_domain_id' => 'includes/domain_views_handler_field_domain_id.inc',
+    'domain_views_handler_field_domain_sitename' => 'includes/domain_views_handler_field_domain_sitename.inc',
+    'domain_views_handler_field_domain_subdomain' => 'includes/domain_views_handler_field_domain_subdomain.inc',
+    'domain_views_handler_filter_domain_access_current_all' => 'includes/domain_views_handler_filter_domain_access_current_all.inc',
+    'domain_views_handler_filter_domain_access_gid' => 'includes/domain_views_handler_filter_domain_access_gid.inc',
+    'domain_views_handler_filter_domain_access_realm' => 'includes/domain_views_handler_filter_domain_access_realm.inc',
+    'domain_views_handler_filter_domain_domain_id' => 'includes/domain_views_handler_filter_domain_domain_id.inc',
+    'domain_views_handler_filter_domain_machine_name' => 'includes/domain_views_handler_filter_domain_machine_name.inc',
+    'domain_views_plugin_access' => 'includes/domain_views_plugin_access.inc',
+    'domain_views_plugin_argument_default_current' => 'includes/domain_views_plugin_argument_default_current.inc',
+    'domain_views_plugin_cache_time' => 'includes/domain_views_plugin_cache_time.inc',
+  );
 }

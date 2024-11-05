@@ -3,14 +3,12 @@ Domain Views
 <!--
 |<- - - - - - - This line is exactly 80 characters for reference - - - - - - ->|
 -->
-WORK IN PROGRESS - this module is very buggy, please do not use on production
-sites. However, please DO test this module, report bugs, and submit PRs. 
+This module is a part of the Domain Access suite. Provides Views integration for [Domain Access](https://github.com/backdrop-contrib/domain).
 
 
 Installation
 ------------
-- Install this module using the official Backdrop CMS instructions at
-  https://docs.backdropcms.org/documentation/extend-with-modules.
+- Install this module using the [official Backdrop CMS instructions](https://backdropcms.org/guide/modules).
 
 Issues
 ------
